@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS book(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(30) NOT NULL ,
+    author VARCHAR (30) DEFAULT NULL,
+    translator VARCHAR (30) DEFAULT NULL,
+    isbn VARCHAR (30) DEFAULT NULL,
+    publisher VARCHAR (30) DEFAULT NULl,
+    publication_date DATE DEFAULT NULL ,
+    price INT DEFAULT NULL
+);
