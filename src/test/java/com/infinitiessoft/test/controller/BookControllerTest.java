@@ -26,12 +26,11 @@ class BookControllerTest {
     @Test
     void read() throws Exception {
         RequestBuilder requestBuilder= MockMvcRequestBuilders
-                .get("/book");
+                .get("/books");
 
         mockMvc.perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(jsonPath("$.message",equalTo("查詢成功")))
-                .andExpect(jsonPath("$.data.[0].name",equalTo("哈利波特(6)混血王子的背叛")))
-                .andExpect(jsonPath("$.data.[1].name",equalTo("元宇宙大投資")));
+                .andExpect(jsonPath("$.[0].name",equalTo("哈利波特(6)混血王子的背叛")))
+                .andExpect(jsonPath("$.[1].name",equalTo("元宇宙大投資")));
     }
 }

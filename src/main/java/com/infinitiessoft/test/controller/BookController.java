@@ -3,9 +3,10 @@ package com.infinitiessoft.test.controller;
 
 import com.infinitiessoft.test.entity.Book;
 import com.infinitiessoft.test.service.BookService;
-import com.infinitiessoft.test.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class BookController {
@@ -14,23 +15,23 @@ public class BookController {
     private BookService bookService;
 
 
-    @GetMapping("/book")
-    public JsonResult read(){
+    @GetMapping("/books")
+    public List<Book> read(){
         return bookService.read();
     }
 
-    @PostMapping("/book")
-    public JsonResult create(@RequestBody Book book){
+    @PostMapping("/books")
+    public String create(@RequestBody Book book){
         return bookService.creat(book);
     }
 
-    @PutMapping("/book/{id}")
-    public JsonResult update(@PathVariable Integer id,@RequestBody Book book){
-        return bookService.updateById(id,book);
+    @PutMapping("/books/{bookId}")
+    public String update(@PathVariable Integer bookId,@RequestBody Book book){
+        return bookService.updateById(bookId,book);
     }
 
-    @DeleteMapping("/book/{id}")
-    public JsonResult delete(@PathVariable Integer id){
-        return bookService.deleteById(id);
+    @DeleteMapping("/books/{bookId")
+    public String delete(@PathVariable Integer bookId){
+        return bookService.deleteById(bookId);
     }
 }

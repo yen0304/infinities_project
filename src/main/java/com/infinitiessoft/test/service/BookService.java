@@ -1,16 +1,17 @@
 package com.infinitiessoft.test.service;
 
 import com.infinitiessoft.test.entity.Book;
-import com.infinitiessoft.test.utils.JsonResult;
+
+import java.util.List;
 
 public interface BookService {
 
-    JsonResult creat(Book book);
+    String creat(Book book);
 
-    JsonResult updateById(Integer id,Book book);
+    String updateById(Integer id,Book book);
 
-    JsonResult deleteById(Integer id);
+    String deleteById(Integer id);
 
 
-    JsonResult read();
+    List<Book> read();
 }

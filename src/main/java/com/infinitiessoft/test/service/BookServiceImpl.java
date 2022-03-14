@@ -2,7 +2,6 @@ package com.infinitiessoft.test.service;
 
 import com.infinitiessoft.test.dao.BookRepository;
 import com.infinitiessoft.test.entity.Book;
-import com.infinitiessoft.test.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,15 +24,15 @@ public class BookServiceImpl implements BookService{
      * @return
      */
     @Override
-    public JsonResult creat(Book book) {
+    public String creat(Book book) {
         if(book.getName()==null){
-            return new JsonResult(200,"新增失敗，書本名稱不能為空");
+            throw new IllegalArgumentException("書本名稱為空");
         }
         if(!Objects.isNull(bookRepository.findByName(book.getName()))){
-            return new JsonResult(200,"新增失敗，書本名稱重複");
+            throw new IllegalArgumentException("書本名稱重複");
         }
         bookRepository.save(book);
-        return new JsonResult(200,"創建成功");
+        return "創建成功";
     }
 
     /**
@@ -43,13 +42,13 @@ public class BookServiceImpl implements BookService{
      * @return
      */
     @Override
-    public JsonResult updateById(Integer id,Book book) {
+    public String updateById(Integer id,Book book) {
         if(bookRepository.findById(id).orElse(null)==null){
-            return new JsonResult(200,"書本id不存在，無法更新資料");
+            throw new IllegalArgumentException("書本Id不存在，無法更新");
         }
         book.setId(id);
         bookRepository.save(book);
-        return new JsonResult(200,"更新成功",book);
+        return "更新成功";
     }
 
 
@@ -59,16 +58,16 @@ public class BookServiceImpl implements BookService{
      * @return
      */
     @Override
-    public JsonResult deleteById(Integer id) {
+    public String deleteById(Integer id) {
         if(bookRepository.findById(id).orElse(null)==null){
-            return new JsonResult(200,"書本id不存在，無法進行刪除");
+            throw new IllegalArgumentException("書本Id不存在，無法刪除");
         }
         bookRepository.deleteById(id);
-        return new JsonResult(200,"刪除成功");
+        return "刪除成功";
     }
 
     @Override
-    public JsonResult read() {
+    public List<Book> read() {
         List<Book> list = new ArrayList<>();
         Iterator<Book> its =bookRepository.findAll().iterator();
         while (true) {
@@ -78,6 +77,6 @@ public class BookServiceImpl implements BookService{
                 break;
             }
         }
-        return new JsonResult(200,"查詢成功",list);
+        return list;
     }
 }
