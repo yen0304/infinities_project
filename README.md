@@ -1,4 +1,4 @@
-# 產品後端工程師考題
+#### 產品後端工程師考題
 
 
 
@@ -90,35 +90,12 @@ Example
 
 #### Responses
 
-創建成功
+| Code | Description                 |
+| ---- | --------------------------- |
+| 201  | 創建成功                    |
+| 400  | 書本名稱重複/未填寫必填欄位 |
 
-```json
-{
-  "state": 200,
-  "message": "創建成功",
-  "data": null
-}
-```
 
-書本名稱重複
-
-```json
-{
-  "state": 200,
-  "message": "新增失敗，書本名稱重複",
-  "data": null
-}
-```
-
-未填寫必填欄位
-
-```json
-{
-  "state": 200,
-  "message": "新增失敗，書本名稱不能為空",
-  "data": null
-}
-```
 
 
 
@@ -166,38 +143,12 @@ Example
 
 - 沒有傳送的欄位會更改為空值。
 
-
-
 #### Responses
 
-更新成功
-
-```json
-{
-  "state": 200,
-  "message": "更新成功",
-  "data":{
-    "id": 4,
-    "name": "遺忘效應-改",
-    "author": "喬．哈特",
-    "translator": "彭臨桂",
-    "isbn": "9789860668605",
-    "publisher": "奇幻基地",
-    "publication_date": "2021-07-31T00:00:00.000+00:00",
-    "price": 450
-    }
-}
-```
-
-id不存在
-
-```json
-{
-"state": 200,
-"message": "書本id不存在，無法更新資料",
-"data": null
-}
-```
+| Code | Description |
+| ---- | ----------- |
+| 200  | 更新成功    |
+| 404  | id不存在    |
 
 
 
@@ -215,29 +166,12 @@ Path
 | :------------- | :----- |
 | id （Integer） | 書本id |
 
-#### Responses
+#### 
 
-刪除成功
-
-```json
-{
-  "state": 200,
-  "message": "刪除成功",
-  "data": null
-}
-```
-
-id不存在
-
-```json
-{
-  "state": 200,
-  "message": "書本id不存在，無法進行刪除",
-  "data": null
-}
-```
-
-
+| Code | Description |
+| ---- | ----------- |
+| 200  | 刪除成功    |
+| 404  | id不存在    |
 
 
 
@@ -255,13 +189,49 @@ No parameters
 
 #### Responses
 
+| Code | Description |
+| ---- | ----------- |
+| 200  | 查詢成功    |
+
+Example value
+
 ```json
-{ 
-  "state": 200,
-  "message": "查詢成功",
-  "data": {}
-}
+[
+  {
+    "id": 1,
+    "name": "哈利波特(6)混血王子的背叛",
+    "author": "J.K.羅琳",
+    "translator": "林靜華",
+    "isbn": "9789573337546",
+    "publisher": "皇冠",
+    "publication_date": "2021-07-26",
+    "price": 699
+  },
+{
+    "id": 2,
+    "name": "元宇宙大投資",
+    "author": "焦娟, 易歡歡, 毛永豐",
+    "translator": null,
+    "isbn": "9786267079133",
+    "publisher": "樂金文化 ",
+    "publication_date": "2022-03-09",
+    "price": 480
+},
+  {
+    "id": 3,
+    "name": "咒術迴戰 18",
+    "author": "芥見",
+    "translator": "張紹仁",
+    "isbn": "9789572681824",
+    "publisher": "東立 ",
+    "publication_date": "2022-01-06",
+    "price": 100
+  }
+]
 ```
 
 
 
+| Code | Description |
+| ---- | ----------- |
+| 404  | 找不到書籍  |

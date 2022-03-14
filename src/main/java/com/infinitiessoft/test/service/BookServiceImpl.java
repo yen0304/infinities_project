@@ -3,6 +3,8 @@ package com.infinitiessoft.test.service;
 import com.infinitiessoft.test.dao.BookRepository;
 import com.infinitiessoft.test.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,15 +26,15 @@ public class BookServiceImpl implements BookService{
      * @return
      */
     @Override
-    public String creat(Book book) {
+    public ResponseEntity<String> creat(Book book) {
         if(book.getName()==null){
-            throw new IllegalArgumentException("書本名稱為空");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         if(!Objects.isNull(bookRepository.findByName(book.getName()))){
-            throw new IllegalArgumentException("書本名稱重複");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         bookRepository.save(book);
-        return "創建成功";
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
@@ -42,13 +44,13 @@ public class BookServiceImpl implements BookService{
      * @return
      */
     @Override
-    public String updateById(Integer id,Book book) {
+    public ResponseEntity<String> updateById(Integer id,Book book) {
         if(bookRepository.findById(id).orElse(null)==null){
-            throw new IllegalArgumentException("書本Id不存在，無法更新");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         book.setId(id);
         bookRepository.save(book);
-        return "更新成功";
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
@@ -58,16 +60,16 @@ public class BookServiceImpl implements BookService{
      * @return
      */
     @Override
-    public String deleteById(Integer id) {
+    public ResponseEntity<String> deleteById(Integer id) {
         if(bookRepository.findById(id).orElse(null)==null){
-            throw new IllegalArgumentException("書本Id不存在，無法刪除");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         bookRepository.deleteById(id);
-        return "刪除成功";
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Override
-    public List<Book> read() {
+    public ResponseEntity<List> read() {
         List<Book> list = new ArrayList<>();
         Iterator<Book> its =bookRepository.findAll().iterator();
         while (true) {
@@ -77,6 +79,10 @@ public class BookServiceImpl implements BookService{
                 break;
             }
         }
-        return list;
+        if (list.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(list);
+        }
     }
 }

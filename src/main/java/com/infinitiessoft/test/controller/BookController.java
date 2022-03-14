@@ -4,6 +4,7 @@ package com.infinitiessoft.test.controller;
 import com.infinitiessoft.test.entity.Book;
 import com.infinitiessoft.test.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,22 +17,22 @@ public class BookController {
 
 
     @GetMapping("/books")
-    public List<Book> read(){
+    public ResponseEntity<List> read(){
         return bookService.read();
     }
 
     @PostMapping("/books")
-    public String create(@RequestBody Book book){
+    public ResponseEntity<String> create(@RequestBody Book book){
         return bookService.creat(book);
     }
 
     @PutMapping("/books/{bookId}")
-    public String update(@PathVariable Integer bookId,@RequestBody Book book){
+    public ResponseEntity<String> update(@PathVariable Integer bookId,@RequestBody Book book){
         return bookService.updateById(bookId,book);
     }
 
-    @DeleteMapping("/books/{bookId")
-    public String delete(@PathVariable Integer bookId){
+    @DeleteMapping("/books/{bookId}")
+    public ResponseEntity<String> delete(@PathVariable Integer bookId){
         return bookService.deleteById(bookId);
     }
 }

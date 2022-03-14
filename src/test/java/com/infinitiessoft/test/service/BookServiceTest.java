@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +31,7 @@ public class BookServiceTest {
         book.setName("哈利波特(7)死神的聖物");
         book.setPrice(799);
         book.setPublisher("皇冠");
-        assertEquals("創建成功",bookService.creat(book));
+        assertEquals(ResponseEntity.status(HttpStatus.CREATED).build(),bookService.creat(book));
     }
 
     @DisplayName("測試更新書本")
@@ -42,8 +44,8 @@ public class BookServiceTest {
         book.setName("哈利波特(6)混血王子的背叛");
         book.setPrice(2000);
         book.setPublisher("皇冠");
-
-        assertEquals("更新成功",bookService.updateById(1,book));
+        //更新作者
+        assertEquals(ResponseEntity.status(HttpStatus.OK).build(),bookService.updateById(1,book));
 
         Integer price=bookRepository.findById(1).get().getPrice();
         assertEquals(2000,price);
@@ -52,7 +54,7 @@ public class BookServiceTest {
     @DisplayName("測試刪除")
     @Test
     void deleteById() {
-        assertEquals("刪除成功",bookService.deleteById(3));
+        assertEquals(ResponseEntity.status(HttpStatus.OK).build(),bookService.deleteById(3));
         assertNull(bookRepository.findById(3).orElse(null));
     }
 

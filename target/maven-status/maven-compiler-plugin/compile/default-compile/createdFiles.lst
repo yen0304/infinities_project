@@ -1,0 +1,6 @@
+com/infinitiessoft/test/service/BookServiceImpl.class
+com/infinitiessoft/test/dao/BookRepository.class
+com/infinitiessoft/test/TestApplication.class
+com/infinitiessoft/test/entity/Book.class
+com/infinitiessoft/test/controller/BookController.class
+com/infinitiessoft/test/service/BookService.class
