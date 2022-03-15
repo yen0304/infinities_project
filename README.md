@@ -44,17 +44,13 @@ docker container stop [CONTAINER ID]
 
 ## API文件
 
-這份考題我的預設情況是書本名稱不會有重複的情況發生，假設前端所有呼叫API後的動作是建立在回應正確的情況，例如：新增書本/或是更新書本的時候，遇到書本名稱重複，或是根本沒有這個id，後端還是會回應了HTTP 200給前端。因為前端可以透過收到成功呼叫之後，進行想要做的動作（例如AJAX的success fuction()），舉例：新增書本，遇到書本名稱重複，回傳200，前端收到之後fuction()，可以更新頁面、或是出現警示訊息（JavaScript的alert）。
-
 
 
 ### 新增一本書籍
 
-| 說明         | Method | path   |
-| ------------ | ------ | ------ |
-| 新增一本書籍 | POST   | /books |
-
-
+| 說明         | Method | path  |
+| ------------ | ------ | ----- |
+| 新增一本書籍 | POST   | /book |
 
 #### Parameters
 
@@ -103,19 +99,17 @@ Example
 
 ### 更新一本書籍資料
 
-| 說明             | Method | path            |
-| ---------------- | ------ | --------------- |
-| 更新一本書籍資料 | PUT    | /books/{bookId} |
-
-
+| 說明             | Method | path       |
+| ---------------- | ------ | ---------- |
+| 更新一本書籍資料 | PUT    | /book/{id} |
 
 #### Parameters
 
 Path
 
-| 參數名稱          | 說明   |
-| :---------------- | :----- |
-| bookId（Integer） | 書本id |
+| 參數名稱       | 說明   |
+| :------------- | :----- |
+| id （Integer） | 書本id |
 
 Body
 
@@ -147,8 +141,6 @@ Example
 
 - 沒有傳送的欄位會更改為空值。
 
-
-
 #### Responses
 
 | Code | Description |
@@ -158,27 +150,21 @@ Example
 
 
 
-
-
 ### 刪除一本書籍資料
 
-| 說明         | Method | path            |
-| ------------ | ------ | --------------- |
-| 刪除一本書籍 | DELETE | /books/{bookId} |
-
-
+| 說明         | Method | path       |
+| ------------ | ------ | ---------- |
+| 刪除一本書籍 | DELETE | /book/{id} |
 
 #### Parameters
 
 Path
 
-| 參數名稱          | 說明   |
-| :---------------- | :----- |
-| bookId（Integer） | 書本id |
+| 參數名稱       | 說明   |
+| :------------- | :----- |
+| id （Integer） | 書本id |
 
-
-
-#### Responses
+#### 
 
 | Code | Description |
 | ---- | ----------- |
@@ -189,17 +175,15 @@ Path
 
 ### 列出所有書籍
 
-| 說明         | Method | path   | 參數 |
-| ------------ | ------ | ------ | ---- |
-| 列出所有書籍 | GET    | /books | 無   |
+| 說明         | Method | path  | 參數 |
+| ------------ | ------ | ----- | ---- |
+| 列出所有書籍 | GET    | /book | 無   |
 
 
 
 #### Parameters
 
 No parameters
-
-
 
 #### Responses
 
@@ -243,9 +227,3 @@ Example value
   }
 ]
 ```
-
-
-
-| Code | Description |
-| ---- | ----------- |
-| 404  | 找不到書籍  |

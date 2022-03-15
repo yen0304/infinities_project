@@ -79,10 +79,6 @@ public class BookServiceImpl implements BookService{
                 break;
             }
         }
-        if (list.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else{
             return ResponseEntity.status(HttpStatus.OK).body(list);
-        }
     }
 }
