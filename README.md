@@ -18,11 +18,9 @@ docker pull asce55123/test001:latest
 
 
 
-2.透過 `cd`指令將工作目錄移動到下載好的Github專案目錄（因為dockfile檔案放在裡面）
-
 ### 啟動docker image
 
-3.啟動docker image
+2.啟動docker image
 
 ```bash
 docker run -d -p 8080:8080 asce55123/test001
@@ -32,12 +30,34 @@ docker run -d -p 8080:8080 asce55123/test001
 
 ### 停止container
 
-執行`docker container ls`，得到container ID之後
+3.執行`docker container ls`，得到container ID之後
 
 結果應該會如下：
 
 ```bash
 docker container stop [CONTAINER ID]
+```
+
+
+
+### Dockerfile
+
+Dockerfile檔案有放在github目錄底下，程式碼如下：
+
+```dockerfile
+FROM adoptopenjdk:11-jre-hotspot as builder
+WORKDIR application
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+RUN java -Djarmode=layertools -jar app.jar extract
+
+FROM adoptopenjdk:11-jre-hotspot
+WORKDIR application
+COPY --from=builder application/dependencies/ ./
+COPY --from=builder application/spring-boot-loader/ ./
+COPY --from=builder application/snapshot-dependencies/ ./
+COPY --from=builder application/application/ ./
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
 ```
 
 
@@ -48,9 +68,9 @@ docker container stop [CONTAINER ID]
 
 ### 新增一本書籍
 
-| 說明         | Method | path  |
-| ------------ | ------ | ----- |
-| 新增一本書籍 | POST   | /book |
+| 說明         | Method | path   |
+| ------------ | ------ | ------ |
+| 新增一本書籍 | POST   | /books |
 
 #### Parameters
 
@@ -99,17 +119,17 @@ Example
 
 ### 更新一本書籍資料
 
-| 說明             | Method | path       |
-| ---------------- | ------ | ---------- |
-| 更新一本書籍資料 | PUT    | /book/{id} |
+| 說明             | Method | path            |
+| ---------------- | ------ | --------------- |
+| 更新一本書籍資料 | PUT    | /books/{bookId} |
 
 #### Parameters
 
 Path
 
-| 參數名稱       | 說明   |
-| :------------- | :----- |
-| id （Integer） | 書本id |
+| 參數名稱          | 說明   |
+| :---------------- | :----- |
+| bookId（Integer） | 書本id |
 
 Body
 
@@ -152,19 +172,19 @@ Example
 
 ### 刪除一本書籍資料
 
-| 說明         | Method | path       |
-| ------------ | ------ | ---------- |
-| 刪除一本書籍 | DELETE | /book/{id} |
+| 說明         | Method | path            |
+| ------------ | ------ | --------------- |
+| 刪除一本書籍 | DELETE | /books/{bookId} |
 
 #### Parameters
 
 Path
 
-| 參數名稱       | 說明   |
-| :------------- | :----- |
-| id （Integer） | 書本id |
+| 參數名稱          | 說明   |
+| :---------------- | :----- |
+| bookId（Integer） | 書本id |
 
-#### 
+#### Responses
 
 | Code | Description |
 | ---- | ----------- |
@@ -175,9 +195,9 @@ Path
 
 ### 列出所有書籍
 
-| 說明         | Method | path  | 參數 |
-| ------------ | ------ | ----- | ---- |
-| 列出所有書籍 | GET    | /book | 無   |
+| 說明         | Method | path   | 參數 |
+| ------------ | ------ | ------ | ---- |
+| 列出所有書籍 | GET    | /books | 無   |
 
 
 
